@@ -58,15 +58,15 @@ const props = defineProps({
                                     >
                                         <td
                                             class="px-6 py-4 text-center text-gray-500"
-                                            v-text="lifts.type"
-                                        ></td>
-                                        <td
-                                            class="px-6 py-4 text-center text-gray-500"
-                                            v-text="lifts.type"
-                                        ></td>
-                                        <td
-                                            class="px-6 py-4 text-center text-gray-500"
                                             v-text="lifts.model"
+                                        ></td>
+                                        <td
+                                            class="px-6 py-4 text-center text-gray-500"
+                                            v-text="lifts.type"
+                                        ></td>
+                                        <td
+                                            class="px-6 py-4 text-center text-gray-500"
+                                            v-text="lifts.year"
                                         ></td>
                                         <td
                                             class="px-6 py-4 text-center text-gray-500"

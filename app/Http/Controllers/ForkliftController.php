@@ -14,7 +14,7 @@ class ForkliftController extends Controller
         return Inertia::render('Home', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'forklifts' => Forklift::latest()->get()
+            'forklifts' => Forklift::orderBy('model', 'desc')->get()
         ]);
     }
 

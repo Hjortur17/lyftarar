@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('forklifts', function (Blueprint $table) {
             $table->id();
-            $table->string('make');
             $table->string('model');
+            $table->string('type');
             $table->string('year');
             $table->string('serial');
             $table->string('owner');
