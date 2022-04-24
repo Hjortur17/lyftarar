@@ -17,5 +17,6 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [ForkliftController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
+Route::get('/lyftarar/{model}', [ForkliftController::class, 'show'])->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

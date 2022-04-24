@@ -1,36 +1,36 @@
 <template>
     <nav class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between">
-            <!--            <div class="flex">-->
-            <!--                &lt;!&ndash; Navigation Links &ndash;&gt;-->
-            <!--                <div class="hidden space-x-8 sm:-my-px sm:flex">-->
-            <!--                    <BreezeNavLink-->
-            <!--                        :href="route('home')"-->
-            <!--                        :active="route().current('home')"-->
-            <!--                    >-->
-            <!--                        Dashboard-->
-            <!--                    </BreezeNavLink>-->
-            <!--                </div>-->
-            <!--            </div>-->
+            <div class="flex space-x-4">
+                <div class="flex flex-col">
+                    <label class="mb-2 text-sm font-bold uppercase">
+                        Leita að lyftara
+                    </label>
 
-            <div class="flex flex-col">
-                <label class="mb-2 text-sm font-bold uppercase">
-                    Leita að lyftara
-                </label>
-
-                <div
-                    class="relative mb-3 flex w-full flex-wrap items-stretch focus:text-neutral-900"
-                >
-                    <span
-                        class="absolute z-10 h-full w-8 items-center justify-center rounded bg-transparent py-3 pl-3 text-center leading-tight text-neutral-400 focus:text-neutral-900"
+                    <div
+                        class="relative mb-3 flex w-full flex-wrap items-stretch focus:text-neutral-900"
                     >
-                        JL-
-                    </span>
-                    <input
-                        type="text"
-                        placeholder="0000"
-                        class="relative w-full rounded border-0 bg-white px-2 py-3 pl-10 leading-tight text-neutral-400 shadow outline-none focus:text-neutral-900 focus:outline-none"
-                    />
+                        <span
+                            class="absolute z-10 h-full w-8 items-center justify-center rounded bg-transparent py-3 pl-3 text-center leading-tight text-neutral-400 focus:text-neutral-900"
+                        >
+                            JL-
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="0000"
+                            class="relative w-full rounded border-0 bg-white px-2 py-3 pl-10 leading-tight text-neutral-400 shadow outline-none focus:text-neutral-900 focus:outline-none"
+                        />
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:flex">
+                    <BreezeNavLink
+                        :href="route('home')"
+                        :active="route().current('home')"
+                    >
+                        Heim
+                    </BreezeNavLink>
                 </div>
             </div>
 

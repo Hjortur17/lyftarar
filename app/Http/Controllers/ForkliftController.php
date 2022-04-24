@@ -39,15 +39,14 @@ class ForkliftController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Forklift  $forklift
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Forklift $forklift)
+    public function show($model)
     {
-        //
+//        ->with('author')->with(['tags', 'images'])
+        $forklift = Forklift::where('model', $model)->firstOrFail();
+
+        return Inertia::render('Show', [
+            'forklift' => $forklift
+        ]);
     }
 
     /**
