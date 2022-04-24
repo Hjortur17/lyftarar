@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-neutral-50">
         <!-- Page Heading -->
         <header class="flex h-44 items-center bg-blue-500 text-blue-50">
             <Navbar></Navbar>

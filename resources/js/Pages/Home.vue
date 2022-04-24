@@ -25,7 +25,7 @@ const props = defineProps({
                     <div class="w-full">
                         <div class="border-b border-gray-200 shadow">
                             <table class="w-full">
-                                <thead class="bg-neutral-50">
+                                <thead class="bg-neutral-100">
                                     <tr>
                                         <th class="px-6 py-4 text-sm">Gerð</th>
                                         <th class="px-6 py-4 text-sm">

@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Forklift;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
-class ForkliftController extends Controller
+class ServiceController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        return Inertia::render('Home', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'forklifts' => Forklift::orderBy('model', 'desc')->get()
-        ]);
+        //
     }
 
     /**
@@ -39,22 +37,24 @@ class ForkliftController extends Controller
         //
     }
 
-    public function show($model)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
-        $forklift = Forklift::where('model', $model)->with('services')->firstOrFail();
-
-        return Inertia::render('Show', [
-            'forklift' => $forklift
-        ]);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Forklift  $forklift
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Forklift $forklift)
+    public function edit($id)
     {
         //
     }
@@ -63,10 +63,10 @@ class ForkliftController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Forklift  $forklift
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Forklift $forklift)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -74,10 +74,10 @@ class ForkliftController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Forklift  $forklift
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Forklift $forklift)
+    public function destroy($id)
     {
         //
     }

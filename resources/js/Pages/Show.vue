@@ -8,23 +8,17 @@ const props = defineProps({
 </script>
 
 <template>
+    <Head :title="forklift.model" />
     <Main>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div class="mb-12 flex flex-row items-center justify-between">
+                <div class="mb-8 flex flex-row items-center justify-between">
                     <h2 class="text-4xl" v-text="forklift.type"></h2>
-                    <div class="space-x-4">
-                        <button
-                            class="rounded-md bg-white px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
-                        >
-                            Bæta við þjónustu
-                        </button>
-                        <button
-                            class="rounded-md bg-red-300 px-6 py-2 text-red-800 shadow duration-150 ease-in-out hover:shadow-md"
-                        >
-                            Taka úr umferð
-                        </button>
-                    </div>
+                    <button
+                        class="rounded-md bg-red-300 px-6 py-2 text-red-800 shadow duration-150 ease-in-out hover:shadow-md"
+                    >
+                        Taka úr umferð
+                    </button>
                 </div>
                 <div class="grid grid-cols-3 gap-1">
                     <p>
@@ -69,25 +63,50 @@ const props = defineProps({
                     </p>
                 </div>
 
-                <h2 class="mt-12 mb-4 text-2xl font-bold">Þjónustusaga</h2>
+                <div
+                    class="mt-12 mb-6 flex flex-row items-center justify-between space-x-4"
+                >
+                    <h2 class="text-2xl font-bold">Þjónustusaga</h2>
+                    <button
+                        class="rounded-md bg-white px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
+                    >
+                        Bæta við þjónustu
+                    </button>
+                </div>
 
-                <table class="w-full">
-                    <thead class="bg-neutral-50">
+                <table class="w-full shadow-md">
+                    <thead class="bg-neutral-100">
                         <tr>
                             <th class="px-6 py-4 text-sm">Dagsetning</th>
                             <th class="px-6 py-4 text-sm">Forgangur</th>
                             <th class="px-6 py-4 text-sm">Viðgerð</th>
-                            <th class="px-6 py-4 text-sm">Athugasemnd</th>
-                            <th class="px-6 py-4 text-sm">Búið til</th>
+                            <th class="w-7/12 px-6 py-4 text-left text-sm">
+                                Athugasemnd
+                            </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <tr class="whitespace-nowrap">
-                            <td class="px-6 py-4 text-center">Prufa</td>
-                            <td class="px-6 py-4 text-center">Prufa</td>
-                            <td class="px-6 py-4 text-center">Prufa</td>
-                            <td class="px-6 py-4 text-center">Prufa</td>
-                            <td class="px-6 py-4 text-center">Prufa</td>
+                        <tr class="" v-for="service in forklift.services">
+                            <td
+                                class="px-6 py-4 text-center"
+                                v-text="
+                                    new Date(
+                                        service.created_at
+                                    ).toLocaleDateString('en-GB')
+                                "
+                            ></td>
+                            <td
+                                class="px-6 py-4 text-center"
+                                v-text="service.priority"
+                            ></td>
+                            <td
+                                class="px-6 py-4 text-center"
+                                v-text="service.type"
+                            ></td>
+                            <td
+                                class="px-6 py-4 text-left"
+                                v-text="service.description"
+                            ></td>
                         </tr>
                     </tbody>
                 </table>
