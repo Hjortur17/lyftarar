@@ -15,25 +15,24 @@ class ServiceController extends Controller
         return Inertia::render('Services', ['services' => $services]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            'priority' => 'required',
+            'type' => 'required|max:50',
+            'description' => 'required|min:5',
+        ]);
+
+        Service::create([
+            'forklift_id' => $request->forklift,
+            'priority' => $request->priority,
+            'type' => $request->type,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back();
+
+//        return Redirect::route('users.index');
     }
 
     /**

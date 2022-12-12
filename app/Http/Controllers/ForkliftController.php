@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Forklift;
 use App\Models\ForkliftClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -17,20 +18,23 @@ class ForkliftController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function search(Request $request)
     {
-        //
+        $forklift = Forklift::where('model', $request->model)->first();
+
+        if ($forklift !== null) {
+            return Redirect::route('forklift.show', $forklift->model);
+        }
+
+        return back()->withErrors([
+            'search' => 'Enginn lyftari með þetta JL númer'
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,14 +45,14 @@ class ForkliftController extends Controller
     public function show($model)
     {
         return Inertia::render('Show', [
-            'forklift' => Forklift::where('model', $model)->with(['services', 'forklift_classes', 'forklifts_equipment'])->firstOrFail()
+            'forklift' => Forklift::where('model', $model)->with(['services', 'equipments'])->firstOrFail()
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Forklift  $forklift
+     * @param \App\Models\Forklift $forklift
      * @return \Illuminate\Http\Response
      */
     public function edit(Forklift $forklift)
@@ -59,8 +63,8 @@ class ForkliftController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Forklift  $forklift
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Forklift $forklift
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Forklift $forklift)
@@ -71,7 +75,7 @@ class ForkliftController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Forklift  $forklift
+     * @param \App\Models\Forklift $forklift
      * @return \Illuminate\Http\Response
      */
     public function destroy(Forklift $forklift)

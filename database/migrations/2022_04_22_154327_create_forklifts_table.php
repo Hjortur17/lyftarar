@@ -29,6 +29,7 @@ return new class extends Migration
                     ->on('forklift_classes')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -15,10 +15,16 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('forklift_id');
             $table->string('priority');
             $table->string('type');
-            $table->text('description');
+            $table->text('description')->nullable();
+
+            $table->foreignId('forklift_id')
+                    ->references('id')
+                    ->on('forklifts')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

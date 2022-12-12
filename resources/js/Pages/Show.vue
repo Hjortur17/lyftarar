@@ -1,35 +1,3 @@
-<script setup>
-import {Head, Link, useForm} from "@inertiajs/inertia-vue3";
-import Main from "@/Layouts/Main";
-import {ref} from "vue";
-
-const props = defineProps({
-    forklift: Object
-});
-
-const showForm = ref(false);
-
-const deleteForklift = () => {
-    let answer = confirm(
-        "Ertu viss um að þú vilt eyða þessum lyftara? Lyftaranum verður eytt og allri þjónustusögunni hans"
-    );
-
-    console.log(answer);
-};
-
-const createServiceForm = useForm({
-    priority: "",
-    type: "",
-    description: ""
-});
-
-const submitServiceForm = () => {
-    createServiceForm.post(route("login"), {
-        onFinish: () => createServiceForm.reset("password")
-    });
-};
-</script>
-
 <template>
     <Head :title="forklift.model"/>
 
@@ -88,7 +56,7 @@ const submitServiceForm = () => {
                     <h2 class="text-2xl font-bold">Þjónustusaga</h2>
                     <button
                         class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
-                        @click="showForm"
+                        @click="showServiceForm = !showServiceForm"
                     >
                         Bæta við þjónustu
                     </button>
@@ -157,33 +125,33 @@ const submitServiceForm = () => {
                     </tr>
                     </thead>
                     <tbody class="bg-white">
-                    <tr class="" v-for="service in forklift.services">
+                    <tr class="" v-for="equipment in forklift.equipments">
                         <td
                             class="px-6 py-4 text-center"
                             v-text="
                                     new Date(
-                                        service.created_at
+                                        equipment.created_at
                                     ).toLocaleDateString('en-GB')
                                 "
                         ></td>
                         <td
                             class="px-6 py-4 text-center"
-                            v-text="service.priority"
+                            v-text="equipment.priority"
                         ></td>
                         <td
                             class="px-6 py-4 text-center"
-                            v-text="service.type"
+                            v-text="equipment.type"
                         ></td>
                         <td
                             class="px-6 py-4 text-left"
-                            v-text="service.description"
+                            v-text="equipment.description"
                         ></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div class="absolute inset-0 z-20 h-screen w-full" id="overlay" v-if="showForm">
+            <div class="absolute inset-0 z-20 h-screen w-full" id="overlay" v-if="showServiceForm">
                 <form
                     @submit.prevent="submitServiceForm"
                     class="absolute z-30 w-2/6 rounded-md bg-white p-6 space-y-6"
@@ -192,18 +160,23 @@ const submitServiceForm = () => {
 
                     <div class="flex flex-col space-y-2">
                         <label for="priority" class="text-sm uppercase font-bold text-neutral-500">Forgangur</label>
-                        <input
+                        <select
                             class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
-                            ref="input"
+                            aria-label="Default select example"
                             id="priority"
-                        />
+                            v-model="serviceForm.priority"
+                        >
+                            <option value="Lítil">Lítil</option>
+                            <option value="Miðlungs">Miðlungs</option>
+                            <option value="Mikill">Mikill</option>
+                        </select>
                     </div>
                     <div class="flex flex-col space-y-2">
                         <label for="type" class="text-sm uppercase font-bold text-neutral-500">Viðgerð</label>
                         <input
                             class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
-                            ref="input"
                             id="type"
+                            v-model="serviceForm.type"
                         />
                     </div>
                     <div class="flex flex-col space-y-2">
@@ -211,13 +184,15 @@ const submitServiceForm = () => {
                                class="text-sm uppercase font-bold text-neutral-500">Athugasemnd</label>
                         <textarea
                             class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
-                            id="description"
                             rows="2"
+                            id="description"
+                            v-model="serviceForm.description"
                         />
                     </div>
                     <div class="flex flex-row space-x-4 justify-end">
                         <button
-                            class="font-bold uppercase text-sm text-neutral-500 hover:text-red-600 duration-150 ease-in-out">
+                            class="font-bold uppercase text-sm text-neutral-500 hover:text-red-600 duration-150 ease-in-out"
+                            @click="showServiceForm = !showServiceForm">
                             Hætta við
                         </button>
                         <button
@@ -230,6 +205,46 @@ const submitServiceForm = () => {
         </div>
     </Main>
 </template>
+
+<script setup>
+import {Head, useForm} from "@inertiajs/inertia-vue3";
+import Main from "@/Layouts/Main";
+import {ref} from "vue";
+
+const props = defineProps({
+    forklift: Object
+});
+
+let showServiceForm = ref(false);
+
+const deleteForklift = () => {
+    let answer = confirm(
+        "Ertu viss um að þú vilt eyða þessum lyftara? Lyftaranum verður eytt og allri þjónustusögunni hans"
+    );
+
+    console.log(answer);
+};
+
+const serviceForm = useForm({
+    forklift: props.forklift.id,
+    priority: null,
+    type: null,
+    description: null,
+})
+
+const submitServiceForm = () => {
+    serviceForm.post('/saga/bæta', {
+        onSuccess: () => {
+            serviceForm.reset()
+        },
+        onFinish: () => (showServiceForm.value = false),
+    });
+
+    // createServiceForm.post(route("login"), {
+    //     onFinish: () => createServiceForm.reset("password")
+    // });
+};
+</script>
 
 <style scoped>
 #overlay {

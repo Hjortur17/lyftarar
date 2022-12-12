@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <Head title="Yfirlit" />
+    <Head title="Heim" />
 
     <Main>
         <div class="py-12">

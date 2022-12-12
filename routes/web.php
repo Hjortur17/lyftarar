@@ -23,9 +23,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('Home');
 
     Route::get('/lyftarar', [ForkliftController::class, 'index']);
-    Route::get('/lyftarar/{model}', [ForkliftController::class, 'show']);
+    Route::get('/lyftarar/{model}', [ForkliftController::class, 'show'])->name('forklift.show');
+
+    Route::post('/lyftarar/leita', [ForkliftController::class, 'search']);
 
     Route::get('/saga', [ServiceController::class, 'index']);
+    Route::post('/saga/bæta', [ServiceController::class, 'store']);
 
     Route::get('/tæki', [EquipmentController::class, 'index']);
 });

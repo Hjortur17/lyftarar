@@ -1,7 +1,7 @@
 <template>
     <nav class="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between">
-            <div class="flex flex-col">
+            <form class="flex flex-col" @submit.prevent="searchForm">
                 <label class="mb-2 text-sm font-bold uppercase">
                     Leita að lyftara
                 </label>
@@ -9,28 +9,32 @@
                 <div
                     class="relative mb-3 flex w-full flex-wrap items-stretch focus:text-neutral-900"
                 >
-                <span
-                    class="absolute z-10 h-full w-8 items-center justify-center rounded bg-transparent py-3 pl-3 text-center leading-tight text-neutral-400 focus:text-neutral-900"
-                >
-                    JL-
-                </span>
+                    <span
+                        class="absolute z-10 h-full w-8 items-center justify-center rounded bg-transparent py-3 pl-3 text-center leading-tight text-neutral-400 focus:text-neutral-900"
+                    >
+                        JL-
+                    </span>
                     <input
+                        v-model="searchForm.model"
                         type="text"
+                        @keydown.enter="submitSearchForm()"
                         placeholder="0000"
-                        class="relative w-full rounded border-0 bg-white px-2 py-3 pl-10 leading-tight text-neutral-400 shadow outline-none focus:text-neutral-900 focus:outline-none"
+                        class="relative w-48 rounded border-0 bg-white px-2 py-3 pl-10 leading-tight text-neutral-400 shadow outline-none focus:text-neutral-900 focus:outline-none"
                     />
                 </div>
-            </div>
+
+                <span v-if="$page.props.errors.search" class="text-sm text-red-600">{{ $page.props.errors.search }}</span>
+            </form>
 
             <!-- Navigation Links -->
-<!--            <div class="hidden space-x-8 sm:-my-px sm:flex items-center">-->
-<!--                <BreezeNavLink-->
-<!--                    :href="route('home')"-->
-<!--                    :active="route().current('home')"-->
-<!--                >-->
-<!--                    Heim-->
-<!--                </BreezeNavLink>-->
-<!--            </div>-->
+            <!--            <div class="hidden space-x-8 sm:-my-px sm:flex items-center">-->
+            <!--                <BreezeNavLink-->
+            <!--                    :href="route('home')"-->
+            <!--                    :active="route().current('home')"-->
+            <!--                >-->
+            <!--                    Heim-->
+            <!--                </BreezeNavLink>-->
+            <!--            </div>-->
 
             <div class="hidden sm:ml-6 sm:flex sm:items-center">
                 <!-- Settings Dropdown -->
@@ -77,11 +81,26 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import {useForm} from "@inertiajs/inertia-vue3";
+import {ref} from "vue";
 import BreezeDropdown from "@/Components/Dropdown.vue";
 import BreezeDropdownLink from "@/Components/DropdownLink.vue";
-import BreezeNavLink from "@/Components/NavLink.vue";
-import { Link } from "@inertiajs/inertia-vue3";
 
 const showingNavigationDropdown = ref(false);
+
+const searchForm = useForm({
+    model: null
+})
+
+const submitSearchForm = () => {
+    searchForm
+        .transform((data) => ({
+            model: 'JL-' + data.model
+        }))
+        .post('/lyftarar/leita', {
+            onSuccess: () => {
+                searchForm.reset()
+            },
+        });
+};
 </script>

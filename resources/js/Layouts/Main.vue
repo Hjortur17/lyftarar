@@ -14,7 +14,7 @@
         <!-- Page Content -->
         <main class="relative h-full w-full">
             <!-- Page Heading -->
-            <header class="flex h-32 items-center">
+            <header class="flex pt-8 items-center">
                 <Navbar></Navbar>
             </header>
 
@@ -25,5 +25,4 @@
 
 <script setup>
 import Navbar from "../Components/Navbar";
-import { Link } from "@inertiajs/inertia-vue3";
 </script>

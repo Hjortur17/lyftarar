@@ -23,7 +23,7 @@ class Forklift extends Model
         return $this->hasMany(ForkliftClass::class, 'id');
     }
 
-    public function forklifts_equipment(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function equipments(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Equipment::class, 'forklift_equipment');
     }
