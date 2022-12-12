@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Forklift;
+use App\Models\ForkliftClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -11,10 +12,8 @@ class ForkliftController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Home', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'forklifts' => Forklift::orderBy('model', 'desc')->get()
+        return Inertia::render('Forklifts', [
+            'forkliftsClasses' => ForkliftClass::with('forklifts')->orderBy('title', 'desc')->get()
         ]);
     }
 
@@ -41,10 +40,8 @@ class ForkliftController extends Controller
 
     public function show($model)
     {
-        $forklift = Forklift::where('model', $model)->with('services')->firstOrFail();
-
         return Inertia::render('Show', [
-            'forklift' => $forklift
+            'forklift' => Forklift::where('model', $model)->with(['services', 'forklift_classes', 'forklifts_equipment'])->firstOrFail()
         ]);
     }
 

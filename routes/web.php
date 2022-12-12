@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\ForkliftController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,7 +19,15 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [ForkliftController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
-Route::get('/lyftarar/{model}', [ForkliftController::class, 'show'])->middleware(['auth', 'verified']);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', [PageController::class, 'index'])->name('Home');
+
+    Route::get('/lyftarar', [ForkliftController::class, 'index']);
+    Route::get('/lyftarar/{model}', [ForkliftController::class, 'show']);
+
+    Route::get('/saga', [ServiceController::class, 'index']);
+
+    Route::get('/tæki', [EquipmentController::class, 'index']);
+});
 
 require __DIR__.'/auth.php';

@@ -13,6 +13,14 @@ const props = defineProps({
     <Main>
         <div class="py-12">
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                <div class="mb-4 flex justify-end">
+                    <button
+                        class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
+                    >
+                        Bæta við lyftara
+                    </button>
+                </div>
+
                 <div class="flex flex-col space-y-8">
                     <div class="w-full" v-for="classes in forkliftsClasses">
                         <h3 class="mb-3">{{ classes.title }}</h3>

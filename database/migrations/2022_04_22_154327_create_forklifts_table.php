@@ -17,11 +17,18 @@ return new class extends Migration
             $table->id();
             $table->string('model');
             $table->string('type');
-            $table->string('year');
+            $table->string('year')->nullable();
             $table->string('serial');
-            $table->string('owner');
+            $table->string('next_inspection');
             $table->string('fuel');
-            $table->string('location');
+            $table->string('owner')->default('Þorbjörn');
+            $table->string('location')->nullable();
+
+            $table->foreignId('forklift_class_id')
+                    ->references('id')
+                    ->on('forklift_classes')
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade');
             $table->timestamps();
         });
     }

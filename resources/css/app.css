@@ -3,8 +3,7 @@
 @import 'tailwindcss/utilities';
 
 body {
-    font-weight: 400;
-    color: #102A43;
+    @apply bg-neutral-50 text-neutral-900;
 }
 
 h1, h2, h3 {
