@@ -23,7 +23,7 @@ class ForkliftController extends Controller
         $forklift = Forklift::where('model', $request->model)->first();
 
         if ($forklift !== null) {
-            return Redirect::route('forklift.show', $forklift->model);
+            return Redirect::route('forklifts.show', $forklift->model);
         }
 
         return back()->withErrors([
@@ -60,26 +60,17 @@ class ForkliftController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Forklift $forklift
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Forklift $forklift)
     {
-        //
+        $forklift->update($request->except(['services', 'forklift_class_id', 'equipments']));
+
+        return back()->with(['success' => 'Lyftari (' . $forklift->model . ') hefur verið uppfærður']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Forklift $forklift
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Forklift $forklift)
     {
-        //
+        $forklift->delete();
+
+        return redirect()->route('forklifts')->with('message', 'Post Delete Successfully');
     }
 }

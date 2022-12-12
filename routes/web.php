@@ -22,8 +22,11 @@ use Inertia\Inertia;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [PageController::class, 'index'])->name('Home');
 
-    Route::get('/lyftarar', [ForkliftController::class, 'index']);
-    Route::get('/lyftarar/{model}', [ForkliftController::class, 'show'])->name('forklift.show');
+    Route::get('/lyftarar', [ForkliftController::class, 'index'])->name('forklifts');
+    Route::get('/lyftarar/{model}', [ForkliftController::class, 'show'])->name('forklifts.show');
+    Route::put('/lyftarar/{forklift}', [ForkliftController::class, 'update'])->name('forklifts.update');
+    Route::delete('/lyftarar/{forklift}', [ForkliftController::class, 'destroy'])->name('forklifts.destroy');
+
 
     Route::post('/lyftarar/leita', [ForkliftController::class, 'search']);
 

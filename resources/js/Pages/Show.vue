@@ -6,12 +6,21 @@
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="mb-8 flex flex-row items-center justify-between">
                     <h2 class="text-4xl" v-text="forklift.type"></h2>
-                    <button
-                        @click="deleteForklift()"
-                        class="rounded-md bg-red-300 px-6 py-2 text-red-800 shadow duration-150 ease-in-out hover:shadow-md"
-                    >
-                        Eyða
-                    </button>
+                    <div class="flex space-x-4">
+                        <button
+                            @click="deleteForklift()"
+                            class="rounded-md bg-red-300 px-6 py-2 text-red-800 shadow duration-150 ease-in-out hover:shadow-md"
+                        >
+                            Eyða
+                        </button>
+
+                        <button
+                            @click="showUpdateForm = !showUpdateForm"
+                            class="rounded-md bg-green-300 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
+                        >
+                            Uppfæra
+                        </button>
+                    </div>
                 </div>
                 <div class="grid grid-cols-3 gap-1">
                     <p>
@@ -55,7 +64,7 @@
                 >
                     <h2 class="text-2xl font-bold">Þjónustusaga</h2>
                     <button
-                        class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
+                        class="rounded-md bg-blue-200 text-blue-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
                         @click="showServiceForm = !showServiceForm"
                     >
                         Bæta við þjónustu
@@ -74,14 +83,14 @@
                     </tr>
                     </thead>
                     <tbody class="bg-white">
-                    <tr class="" v-for="service in forklift.services">
+                    <tr v-for="service in forklift.services">
                         <td
                             class="px-6 py-4 text-center"
                             v-text="
-                                    new Date(
-                                        service.created_at
-                                    ).toLocaleDateString('en-GB')
-                                "
+                                        new Date(
+                                            service.created_at
+                                        ).toLocaleDateString('en-GB')
+                                    "
                         ></td>
                         <td
                             class="px-6 py-4 text-center"
@@ -106,7 +115,7 @@
                 >
                     <h2 class="text-2xl font-bold">Mastur / Ámoksturtæki</h2>
                     <button
-                        class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
+                        class="rounded-md bg-blue-200 text-blue-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md"
                         @click="showForm"
                     >
                         Bæta við mastri/tæki
@@ -151,6 +160,77 @@
                 </table>
             </div>
 
+            <div class="absolute inset-0 z-20 h-screen w-full" id="overlay" v-if="showUpdateForm">
+                <form
+                    @submit.prevent="submitUpdateForm"
+                    class="absolute z-30 w-2/6 rounded-md bg-white p-6 space-y-6"
+                >
+                    <h3 class="text-xl">Uppfæra lyftara</h3>
+
+                    <div class="flex flex-col space-y-2">
+                        <label for="model" class="text-sm uppercase font-bold text-neutral-500">Gerð</label>
+                        <input
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-400 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="model"
+                            disabled
+                            v-model="form.model"
+                        />
+                    </div>
+
+                    <div class="flex flex-col space-y-2">
+                        <label for="location" class="text-sm uppercase font-bold text-neutral-500">Staðsettur</label>
+                        <select
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="location"
+                            v-model="form.location"
+                        >
+                            <option value="Salthús">Salthús</option>
+                            <option value="Frystihús">Frystihús</option>
+                            <option value="Vogar">Vogar</option>
+                            <option value="Ekki vitað">Ekki vitað</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="extra-number"
+                               class="text-sm uppercase font-bold text-neutral-500">Auka númer</label>
+                        <input
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="extra-number"
+                            v-model="form.extra-number"
+                        />
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="owner"
+                               class="text-sm uppercase font-bold text-neutral-500">Eigandi</label>
+                        <input
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="owner"
+                            v-model="form.owner"
+                        />
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="next-inspection"
+                               class="text-sm uppercase font-bold text-neutral-500">Næsta skoðun</label>
+                        <input
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="next-inspection"
+                            v-model="form.next-inspection"
+                        />
+                    </div>
+                    <div class="flex flex-row space-x-4 justify-end">
+                        <button
+                            class="font-bold uppercase text-sm text-neutral-500 hover:text-red-600 duration-150 ease-in-out"
+                            @click="showUpdateForm = !showUpdateForm">
+                            Hætta við
+                        </button>
+                        <button
+                            class="rounded-md bg-blue-200 text-blue-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md">
+                            Uppfæra
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <div class="absolute inset-0 z-20 h-screen w-full" id="overlay" v-if="showServiceForm">
                 <form
                     @submit.prevent="submitServiceForm"
@@ -161,7 +241,7 @@
                     <div class="flex flex-col space-y-2">
                         <label for="priority" class="text-sm uppercase font-bold text-neutral-500">Forgangur</label>
                         <select
-                            class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
                             aria-label="Default select example"
                             id="priority"
                             v-model="serviceForm.priority"
@@ -174,7 +254,7 @@
                     <div class="flex flex-col space-y-2">
                         <label for="type" class="text-sm uppercase font-bold text-neutral-500">Viðgerð</label>
                         <input
-                            class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
                             id="type"
                             v-model="serviceForm.type"
                         />
@@ -183,8 +263,8 @@
                         <label for="description"
                                class="text-sm uppercase font-bold text-neutral-500">Athugasemnd</label>
                         <textarea
-                            class="rounded px-1 py-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
-                            rows="2"
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 resize-none border-neutral-400 focus:border-blue-500 outline-none"
+                            rows="3"
                             id="description"
                             v-model="serviceForm.description"
                         />
@@ -196,7 +276,7 @@
                             Hætta við
                         </button>
                         <button
-                            class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md">
+                            class="rounded-md bg-blue-200 text-blue-900 px-6 py-2 text-green-800 shadow duration-150 ease-in-out hover:shadow-md">
                             Búa til
                         </button>
                     </div>
@@ -216,21 +296,28 @@ const props = defineProps({
 });
 
 let showServiceForm = ref(false);
+let showUpdateForm = ref(false);
 
-const deleteForklift = () => {
-    let answer = confirm(
-        "Ertu viss um að þú vilt eyða þessum lyftara? Lyftaranum verður eytt og allri þjónustusögunni hans"
-    );
-
-    console.log(answer);
-};
+const form = useForm({
+    ...props.forklift
+});
 
 const serviceForm = useForm({
     forklift: props.forklift.id,
     priority: null,
     type: null,
     description: null,
-})
+});
+
+const deleteForklift = () => {
+    let answer = confirm(
+        "Ertu viss um að þú vilt eyða þessum lyftara? Lyftaranum verður eytt og allri þjónustusögunni hans"
+    );
+
+    if (answer) {
+        form.delete(route('forklifts.destroy', props.forklift.id));
+    }
+};
 
 const submitServiceForm = () => {
     serviceForm.post('/saga/bæta', {
@@ -238,6 +325,19 @@ const submitServiceForm = () => {
             serviceForm.reset()
         },
         onFinish: () => (showServiceForm.value = false),
+    });
+
+    // createServiceForm.post(route("login"), {
+    //     onFinish: () => createServiceForm.reset("password")
+    // });
+};
+
+const submitUpdateForm = () => {
+    form.put('/lyftarar/' + props.forklift.id, {
+        onSuccess: () => {
+            form.reset()
+        },
+        onFinish: () => (showUpdateForm.value = false),
     });
 
     // createServiceForm.post(route("login"), {

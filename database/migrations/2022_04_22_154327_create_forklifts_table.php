@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('fuel');
             $table->string('owner')->default('Þorbjörn');
             $table->string('location')->nullable();
+            $table->string('extraNumber')->nullable();
 
             $table->foreignId('forklift_class_id')
                     ->references('id')

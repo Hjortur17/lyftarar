@@ -10,6 +10,8 @@ class Forklift extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     /**
      * Get the services for the Forklifts.
      */
