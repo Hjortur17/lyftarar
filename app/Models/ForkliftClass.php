@@ -11,6 +11,6 @@ class ForkliftClass extends Model
 
     public function forklifts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Forklift::class, 'forklift_class_id');
+        return $this->hasMany(Forklift::class, 'forklift_class_id')->orderByDesc('year');
     }
 }

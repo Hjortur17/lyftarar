@@ -15,7 +15,8 @@ const props = defineProps({
             <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="mb-4 flex justify-end">
                     <button
-                        class="rounded-md bg-teal-200 text-teal-900 px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
+                        class="rounded-md bg-green-200 text-green-900 px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
+                        @click="$inertia.visit('/lyftarar/bæta')"
                     >
                         Bæta við lyftara
                     </button>

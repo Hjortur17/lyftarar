@@ -13,8 +13,8 @@ class ForkliftController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Forklifts', [
-            'forkliftsClasses' => ForkliftClass::with('forklifts')->orderBy('title', 'desc')->get()
+        return Inertia::render('Forklifts/Index', [
+            'forkliftsClasses' => ForkliftClass::with('forklifts')->orderByDesc('title')->get()
         ]);
     }
 
@@ -31,20 +31,46 @@ class ForkliftController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+    public function create()
+    {
+        return Inertia::render('Forklifts/Create');
+    }
+
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            'type' => 'required',
+            'model' => 'required',
+            'serial' => 'required',
+            'fuel' => 'required',
+        ]);
+
+        $forkliftClass = ForkliftClass::where('title', 'LIKE','%'.$request->fuel.'%')->first();
+
+        if (!str_contains($request->model, 'JL-')) {
+            $request->model = 'JL-' . $request->model;
+        }
+
+        Forklift::create([
+            'type' => $request->type,
+            'year' => $request->year,
+            'model' => $request->model,
+            'serial' => $request->serial,
+            'fuel' => $request->fuel,
+            'next_inspection' => $request->next_inspection,
+            'owner' => $request->owner,
+            'location' => $request->location,
+            'extra_number' => $request->extra_number,
+            'bill' => $request->bill,
+            'forklift_class_id' => $forkliftClass->id
+        ]);
+
+        return Redirect::route('forklifts');
     }
 
     public function show($model)
     {
-        return Inertia::render('Show', [
+        return Inertia::render('Forklifts/Show', [
             'forklift' => Forklift::where('model', $model)->with(['services', 'equipments'])->firstOrFail()
         ]);
     }

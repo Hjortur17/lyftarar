@@ -31,8 +31,6 @@ class ServiceController extends Controller
         ]);
 
         return redirect()->back();
-
-//        return Redirect::route('users.index');
     }
 
     /**
