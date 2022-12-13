@@ -14,7 +14,7 @@ class ForkliftController extends Controller
     public function index()
     {
         return Inertia::render('Forklifts/Index', [
-            'forkliftsClasses' => ForkliftClass::with('forklifts')->orderByDesc('title')->get()
+            'forkliftsClasses' => ForkliftClass::with('forklifts')->get()
         ]);
     }
 

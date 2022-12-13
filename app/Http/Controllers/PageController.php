@@ -11,7 +11,7 @@ class PageController extends Controller
     public function index()
     {
         return Inertia::render('Home', [
-            'forkliftsClasses' => ForkliftClass::with('forklifts')->orderBy('title', 'desc')->get()
+            'forkliftsClasses' => ForkliftClass::with('forklifts')->get()
         ]);
     }
 }
