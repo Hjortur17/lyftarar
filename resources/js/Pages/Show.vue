@@ -41,7 +41,7 @@
                     </p>
                     <p>
                         <span class="font-bold uppercase">Næsta skoðun:</span>
-                        18/07/22
+                        {{ forklift.next_inspection }}
                     </p>
                     <p>
                         <span class="font-bold uppercase">Staðsettur:</span>
@@ -49,13 +49,11 @@
                     </p>
                     <p>
                         <span class="font-bold uppercase">Auka númer:</span>
-                        000
+                        {{ forklift.extra_number }}
                     </p>
                     <p>
-                        <span class="font-bold uppercase">
-                            Reikning staða:
-                        </span>
-                        X
+                        <span class="font-bold uppercase">Reikning staða:</span>
+                        {{ forklift.bill ? 'Greitt' : 'Ekki greitt' }}
                     </p>
                 </div>
 
@@ -196,7 +194,7 @@
                         <input
                             class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
                             id="extra-number"
-                            v-model="form.extra-number"
+                            v-model="form.extra_number"
                         />
                     </div>
                     <div class="flex flex-col space-y-2">
@@ -214,8 +212,19 @@
                         <input
                             class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
                             id="next-inspection"
-                            v-model="form.next-inspection"
+                            v-model="form.next_inspection"
                         />
+                    </div>
+                    <div class="flex flex-col space-y-2">
+                        <label for="bill" class="text-sm uppercase font-bold text-neutral-500">Reikningur</label>
+                        <select
+                            class="rounded p-2 leading-tight bg-transparent text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none"
+                            id="bill"
+                            v-model="form.bill"
+                        >
+                            <option value="1">Greitt</option>
+                            <option value="0">Ekki greitt</option>
+                        </select>
                     </div>
                     <div class="flex flex-row space-x-4 justify-end">
                         <button
