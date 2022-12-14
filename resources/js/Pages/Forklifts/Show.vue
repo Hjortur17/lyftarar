@@ -75,9 +75,13 @@
                         <th class="px-6 py-4 text-sm">Dagsetning</th>
                         <th class="px-6 py-4 text-sm">Forgangur</th>
                         <th class="px-6 py-4 text-sm">Viðgerð</th>
-                        <th class="w-7/12 px-6 py-4 text-left text-sm">
+                        <th class="px-6 py-4 text-left text-sm">
                             Athugasemnd
                         </th>
+                        <th class="px-6 py-4 text-left text-sm">
+                            Klárað
+                        </th>
+                        <th class="px-6 py-4 text-left text-sm"></th>
                     </tr>
                     </thead>
                     <tbody class="bg-white">
@@ -102,6 +106,20 @@
                             class="px-6 py-4 text-left"
                             v-text="service.description"
                         ></td>
+                        <td
+                            class="px-6 py-4 text-left"
+                            v-text="service.done ? 'Já' : 'Nei'"
+                        ></td>
+                        <td class="text-center">
+                            <button class="w-4 h-auto hover:text-green-600 duration-150 ease-in-out"
+                                    @click="complete(service.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="w-full h-full fill-current">
+                                    <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                                    <path
+                                        d="M413.505 91.951L133.49 371.966l-98.995-98.995c-4.686-4.686-12.284-4.686-16.971 0L6.211 284.284c-4.686 4.686-4.686 12.284 0 16.971l118.794 118.794c4.686 4.686 12.284 4.686 16.971 0l299.813-299.813c4.686-4.686 4.686-12.284 0-16.971l-11.314-11.314c-4.686-4.686-12.284-4.686-16.97 0z"/>
+                                </svg>
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -278,6 +296,16 @@
                             v-model="serviceForm.description"
                         />
                     </div>
+                    <div class="col-span-1">
+                        <div class="block mt-4">
+                            <label class="flex items-center">
+                                <input name="done" type="checkbox" :true-value="true" :false-value="false" v-model="serviceForm.done"
+                                       class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300">
+                                <span class="ml-2 text-sm text-gray-600 font-semibold">Þetta er klárað</span>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="flex flex-row space-x-4 justify-end">
                         <button
                             class="font-bold uppercase text-sm text-neutral-500 hover:text-red-600 duration-150 ease-in-out"
@@ -299,6 +327,7 @@
 import {Head, useForm} from "@inertiajs/inertia-vue3";
 import Main from "@/Layouts/Main";
 import {ref} from "vue";
+import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
     forklift: Object
@@ -316,6 +345,7 @@ const serviceForm = useForm({
     priority: null,
     type: null,
     description: null,
+    done: false,
 });
 
 const deleteForklift = () => {
@@ -335,10 +365,6 @@ const submitServiceForm = () => {
         },
         onFinish: () => (showServiceForm.value = false),
     });
-
-    // createServiceForm.post(route("login"), {
-    //     onFinish: () => createServiceForm.reset("password")
-    // });
 };
 
 const submitUpdateForm = () => {
@@ -348,11 +374,15 @@ const submitUpdateForm = () => {
         },
         onFinish: () => (showUpdateForm.value = false),
     });
-
-    // createServiceForm.post(route("login"), {
-    //     onFinish: () => createServiceForm.reset("password")
-    // });
 };
+
+function complete(id) {
+    if (confirm("Er þetta búið?")) {
+        Inertia.patch(route("services.update", id), {
+            done: true
+        });
+    }
+}
 </script>
 
 <style scoped>

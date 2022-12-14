@@ -60,7 +60,7 @@ function destroy(id) {
                                         v-text="equipment.serial"
                                     ></td>
                                     <td class="text-center">
-                                        <button class="w-4 h-auto hover:text-red-600 duration-150 ease-in-out" @click="destroy(equipment.id)">
+                                        <button class="w-4 h-auto hover:text-red-600 duration-150 ease-in-out" @click="complete(equipment.id)">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                                  class="w-full h-full fill-current">
                                                 <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->

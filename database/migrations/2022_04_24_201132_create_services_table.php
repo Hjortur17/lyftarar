@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('priority');
             $table->string('type');
             $table->text('description')->nullable();
+            $table->boolean('done')->default(false);
 
             $table->foreignId('forklift_id')
                     ->references('id')

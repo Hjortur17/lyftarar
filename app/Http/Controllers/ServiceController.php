@@ -19,15 +19,15 @@ class ServiceController extends Controller
     {
         $validation = $request->validate([
             'priority' => 'required',
-            'type' => 'required|max:50',
-            'description' => 'required|min:5',
+            'type' => 'required|max:50'
         ]);
 
         Service::create([
             'forklift_id' => $request->forklift,
             'priority' => $request->priority,
             'type' => $request->type,
-            'description' => $request->description,
+            'description' => $request->description === null ? 'Engin athugasemd' : $request->description,
+            'done' => $request->done
         ]);
 
         return redirect()->back();
@@ -44,27 +44,17 @@ class ServiceController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    }
+    public function update(Request $request, Service $service)
     {
-        //
+        $service->update([
+            'done' => $request->done
+        ]);
+
+        return back()->with('success', 'Þjónusta hefur verið uppfærð');
     }
 
     /**
