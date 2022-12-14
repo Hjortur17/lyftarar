@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Equipment;
 use App\Models\Forklift;
 use App\Models\ForkliftClass;
 use Illuminate\Http\Request;
@@ -70,14 +71,17 @@ class ForkliftController extends Controller
 
     public function show($model)
     {
+        $equipments = Equipment::all();
+
         return Inertia::render('Forklifts/Show', [
-            'forklift' => Forklift::where('model', $model)->with(['services', 'equipments'])->firstOrFail()
+            'forklift' => Forklift::where('model', $model)->with(['services', 'equipments'])->firstOrFail(),
+            'equipments' => $equipments
         ]);
     }
 
-    public function edit(Forklift $forklift)
+    // Used to connect equipment to forklift
+    public function edit(Request $request)
     {
-        //
     }
 
     public function update(Request $request, Forklift $forklift)

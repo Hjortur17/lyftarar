@@ -29,6 +29,7 @@ Route::middleware('password.reset')->group(function () {
             Route::get('/{model}', [ForkliftController::class, 'show'])->name('forklifts.show');
             Route::put('/{forklift}', [ForkliftController::class, 'update'])->name('forklifts.update');
             Route::delete('/{forklift}', [ForkliftController::class, 'destroy'])->name('forklifts.destroy');
+            Route::put('/{forklift}/tæki', [ForkliftController::class, 'edit']);
 
             Route::post('/leita', [ForkliftController::class, 'search'])->name('forklifts.search');
         });
@@ -43,6 +44,8 @@ Route::middleware('password.reset')->group(function () {
             Route::get('', [EquipmentController::class, 'index'])->name('equipments.index');
             Route::get('/bæta', [EquipmentController::class, 'create'])->name('equipments.create');
             Route::post('/bæta', [EquipmentController::class, 'store'])->name('equipments.store');
+            Route::put('/tengja', [EquipmentController::class, 'edit'])->name('equipments.edit');
+            Route::put('/aftengja', [EquipmentController::class, 'remove'])->name('equipments.remove');
             Route::delete('/{equipment}', [EquipmentController::class, 'destroy'])->name('equipments.destroy');
         });
 
