@@ -47,11 +47,6 @@
                                 class="relative w-full rounded p-2 pl-10 leading-tight w-full bg-white text-neutral-400 focus:text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none ease-in-out duration-75"
                             />
                         </div>
-<!--                        <input-->
-<!--                            class="rounded p-2 leading-tight w-full bg-white text-neutral-400 focus:text-neutral-900 border-2 border-neutral-400 focus:border-blue-500 outline-none ease-in-out duration-75"-->
-<!--                            id="model"-->
-<!--                            v-model="form.model"-->
-<!--                        />-->
                         <small v-if="form.errors.model" class="text-red-600 font-bold">{{ form.errors.model }}</small>
                     </div>
 

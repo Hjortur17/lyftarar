@@ -49,9 +49,9 @@ const props = defineProps({
                                             class="px-6 py-4 text-center"
                                             v-text="forklift.year"
                                         ></td>
-                                        <td class="px-6 py-4 text-center">
-                                            18/11/22
-                                        </td>
+                                        <td class="px-6 py-4 text-center"
+                                            v-text="forklift.next_inspection"
+                                        ></td>
                                         <td class="px-6 py-4 text-center">
                                             {{ forklift.location == null ? 'N/A' : forklift.location }}
                                         </td>

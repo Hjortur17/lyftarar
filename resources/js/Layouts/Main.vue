@@ -8,8 +8,8 @@
                 <li class="w-full cursor-pointer rounded-lg hover:bg-neutral-100 hover:bg-opacity-60 p-4 ease-in-out duration-150" :class="$page.component === 'Forklifts/Index' ? 'bg-neutral-100 bg-opacity-60 font-bold' : 'px-4 cursor-pointer'" @click="$inertia.visit('/lyftarar')">Lyftarar</li>
                 <li class="w-full cursor-pointer rounded-lg hover:bg-neutral-100 hover:bg-opacity-60 p-4 ease-in-out duration-150" :class="$page.component === 'Services' ? 'bg-neutral-100 bg-opacity-60 font-bold' : 'px-4 cursor-pointer'" @click="$inertia.visit('/saga')">Þjónustusaga</li>
                 <li class="w-full cursor-pointer rounded-lg hover:bg-neutral-100 hover:bg-opacity-60 p-4 ease-in-out duration-150" :class="$page.component === 'Equipments' ? 'bg-neutral-100 bg-opacity-60 font-bold' : 'px-4 cursor-pointer'" @click="$inertia.visit('/tæki')">Mastur/Ámoksturstæki</li>
+                <li class="w-full cursor-pointer rounded-lg hover:bg-neutral-100 hover:bg-opacity-60 p-4 ease-in-out duration-150" :class="$page.component === 'Users' ? 'bg-neutral-100 bg-opacity-60 font-bold' : 'px-4 cursor-pointer'" @click="$inertia.visit('/notendur')">Notendur</li>
             </ul>
-            <div></div>
         </aside>
         <!-- Page Content -->
         <main class="relative h-full w-full">
