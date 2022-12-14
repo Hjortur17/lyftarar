@@ -9,6 +9,8 @@ class Equipment extends Model
 {
     use HasFactory;
 
+    protected $guarded;
+
     public function forklifts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Forklift::class, 'forklift_equipment');

@@ -4,18 +4,18 @@ import Main from "@/Layouts/Main";
 import {Inertia} from "@inertiajs/inertia";
 
 const props = defineProps({
-    forkliftsClasses: Array,
+    equipments: Array,
 });
 
 function destroy(id) {
-    if (confirm("Ertu viss um að þú viljir eyða þessum lyftara?")) {
-        Inertia.delete(route("forklifts.destroy", id));
+    if (confirm("Ertu viss um að þú viljir eyða þessu tæki?")) {
+        Inertia.delete(route("equipments.destroy", id));
     }
 }
 </script>
 
 <template>
-    <Head title="Yfirlit"/>
+    <Head title="Mastur/Ámoksturstæki"/>
 
     <Main>
         <div class="py-12">
@@ -23,58 +23,44 @@ function destroy(id) {
                 <div class="mb-4 flex justify-end">
                     <button
                         class="rounded-md bg-green-200 text-green-900 px-6 py-2 shadow duration-150 ease-in-out hover:shadow-md"
-                        @click="$inertia.visit('/lyftarar/bæta')"
+                        @click="$inertia.visit(route('equipments.create'))"
                     >
-                        Bæta við lyftara
+                        Bæta við tæki
                     </button>
                 </div>
 
                 <div class="flex flex-col space-y-8">
-                    <div class="w-full" v-for="classes in forkliftsClasses">
-                        <h3 class="mb-3">{{ classes.title }}</h3>
+                    <div class="w-full">
+                        <h3 class="mb-3">Mastur/Ámoksturstæki</h3>
                         <div class="border-b border-gray-200 shadow">
                             <table class="w-full">
                                 <thead class="bg-neutral-100">
                                 <tr>
-                                    <th class="px-6 py-4 text-sm">JL númer</th>
-                                    <th class="px-6 py-4 text-sm">Tegund</th>
-                                    <th class="px-6 py-4 text-sm">Árgerð</th>
-                                    <th class="px-6 py-4 text-sm">Næsta skoðun</th>
-                                    <th class="px-6 py-4 text-sm">Staðsettur</th>
+                                    <th class="px-6 py-4 text-sm">Tæki</th>
+                                    <th class="px-6 py-4 text-sm">Týpa</th>
+                                    <th class="px-6 py-4 text-sm">Serial</th>
                                     <th class="px-6 py-4 text-sm"></th>
                                 </tr>
                                 </thead>
                                 <tbody class="bg-white">
                                 <tr
                                     class="whitespace-nowrap"
-                                    v-for="forklift in classes.forklifts"
+                                    v-for="equipment in equipments"
                                 >
-                                    <td class="px-6 py-4 text-center">
-                                        <Link
-                                            :href="
-                                                    '/lyftarar/' + forklift.model
-                                                "
-                                            class="cursor-pointer duration-150 ease-in-out hover:text-blue-500"
-                                            v-text="forklift.model"
-                                        ></Link>
-                                    </td>
                                     <td
                                         class="px-6 py-4 text-center"
-                                        v-text="forklift.type"
+                                        v-text="equipment.title"
                                     ></td>
                                     <td
                                         class="px-6 py-4 text-center"
-                                        v-text="forklift.year"
+                                        v-text="equipment.type"
                                     ></td>
-                                    <td class="px-6 py-4 text-center">
-                                        18/11/22
-                                    </td>
-                                    <td class="px-6 py-4 text-center">
-                                        {{ forklift.location == null ? 'N/A' : forklift.location }}
-                                    </td>
+                                    <td
+                                        class="px-6 py-4 text-center"
+                                        v-text="equipment.serial"
+                                    ></td>
                                     <td class="text-center">
-                                        <button class="w-4 h-auto hover:text-red-600 duration-150 ease-in-out"
-                                                @click="destroy(forklift.id)">
+                                        <button class="w-4 h-auto hover:text-red-600 duration-150 ease-in-out" @click="destroy(equipment.id)">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
                                                  class="w-full h-full fill-current">
                                                 <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->

@@ -33,10 +33,13 @@ Route::middleware('password.reset')->group(function () {
             Route::post('/leita', [ForkliftController::class, 'search'])->name('forklifts.search');
         });
 
-        Route::get('/saga', [ServiceController::class, 'index']);
-        Route::post('/saga/bæta', [ServiceController::class, 'store']);
+        Route::get('/saga', [ServiceController::class, 'index'])->name('services');
+        Route::post('/saga/bæta', [ServiceController::class, 'store'])->name('service.store');
 
-        Route::get('/tæki', [EquipmentController::class, 'index']);
+        Route::get('/tæki', [EquipmentController::class, 'index'])->name('equipments.index');
+        Route::get('/tæki/bæta', [EquipmentController::class, 'create'])->name('equipments.create');
+        Route::post('/tæki/bæta', [EquipmentController::class, 'store'])->name('equipments.store');
+        Route::delete('/tæki/{equipment}', [EquipmentController::class, 'destroy'])->name('equipments.destroy');
 
         Route::get('/notendur', [UsersController::class, 'index'])->name('users')->middleware('can:admin');
         Route::delete('/notendur/{user}', [UsersController::class, 'destroy'])->name('users.destroy')->middleware('can:admin');
